@@ -1,20 +1,19 @@
 pipeline {
  agent any
-
- stages {
-
-  stage('Checkout Code') {
-   steps {
-    git url: '<your-git-repo-url>', branch: 'main'
-   }
-  }
-
-  stage('Build with Maven') {
-   steps {
-    bat 'mvn clean install'
-   }
-  }
-
+ tools {
+ maven 'M3'
  }
-
+ stages {
+ stage('Checkout Git') {
+ steps {
+ git branch: 'main',
+ url: '<your-repository-url>'
+ }
+ }
+ stage('Build and Test') {
+ steps {
+ bat 'mvn clean test'
+ }
+ }
+ }
 }
